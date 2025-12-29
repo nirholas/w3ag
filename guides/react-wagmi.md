@@ -11,7 +11,10 @@ A practical guide to building W3AG-compliant DeFi interfaces with React and wagm
 5. [Token Lists & Tables](#token-lists--tables)
 6. [Form Inputs](#form-inputs)
 7. [Live Updates & Announcements](#live-updates--announcements)
-8. [Testing](#testing)
+8. [Token Approval Dialog](#token-approval-dialog)
+9. [Network Switcher](#network-switcher)
+10. [Gas Estimator](#gas-estimator)
+11. [Testing](#testing)
 
 ---
 
@@ -720,6 +723,248 @@ describe('WalletModal Accessibility', () => {
 - [ ] Test at 200% zoom
 - [ ] Test with high contrast mode
 - [ ] Test with reduced motion preference
+
+---
+
+## Token Approval Dialog
+
+### Accessible Token Approval Flow
+
+```tsx
+// components/ApprovalExample.tsx
+import { TokenApprovalDialog } from '@w3ag/react';
+import { useWriteContract, useWaitForTransactionReceipt } from 'wagmi';
+import { erc20Abi, parseUnits, maxUint256 } from 'viem';
+import { useState } from 'react';
+
+export function ApprovalExample() {
+  const [showApproval, setShowApproval] = useState(false);
+  const { writeContract, data: hash } = useWriteContract();
+  
+  const token = {
+    address: '0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48' as const, // USDC
+    symbol: 'USDC',
+    name: 'USD Coin',
+    decimals: 6,
+    balance: parseUnits('1000', 6),
+  };
+  
+  const spender = {
+    address: '0x1111111254EEB25477B68fb85Ed929f73A960582' as const, // 1inch
+    name: '1inch Router',
+    verified: true,
+    riskLevel: 'low' as const,
+    explorerUrl: 'https://etherscan.io/address/0x1111111254EEB25477B68fb85Ed929f73A960582',
+  };
+
+  const handleApprove = async (amount: bigint) => {
+    await writeContract({
+      address: token.address,
+      abi: erc20Abi,
+      functionName: 'approve',
+      args: [spender.address, amount],
+    });
+  };
+
+  return (
+    <>
+      <button onClick={() => setShowApproval(true)}>
+        Approve USDC
+      </button>
+      
+      <TokenApprovalDialog
+        isOpen={showApproval}
+        onClose={() => setShowApproval(false)}
+        onApprove={handleApprove}
+        token={token}
+        spender={spender}
+        requestedAmount={parseUnits('100', 6)}
+        chainId={1}
+      />
+    </>
+  );
+}
+```
+
+### W3AG Criteria Met
+
+- **3.4.1**: Risk clearly communicated (unlimited approval warning)
+- **3.4.2**: Spender verification status shown
+- **3.1.1**: Plain language explanations of what approval means
+- **2.1.1**: Full keyboard navigation with focus trap
+- **4.1.2**: Approval status changes announced to screen readers
+
+---
+
+## Network Switcher
+
+### Accessible Network Selection
+
+```tsx
+// components/NetworkExample.tsx
+import { NetworkSwitcher, COMMON_NETWORKS } from '@w3ag/react';
+import { useSwitchChain, useChainId, useAccount } from 'wagmi';
+
+export function NetworkExample() {
+  const chainId = useChainId();
+  const { isConnected } = useAccount();
+  const { switchChain, isPending, error } = useSwitchChain();
+
+  return (
+    <NetworkSwitcher
+      currentNetworkId={chainId}
+      requiredNetworkId={1} // Optional: require Ethereum mainnet
+      networks={COMMON_NETWORKS}
+      onNetworkSwitch={async (networkId) => {
+        await switchChain({ chainId: networkId });
+      }}
+      isConnected={isConnected}
+      isSwitching={isPending}
+      switchError={error?.message}
+      requireConfirmation={true}
+    />
+  );
+}
+```
+
+### Custom Networks
+
+```tsx
+// Add custom networks to the list
+const customNetworks = [
+  ...COMMON_NETWORKS,
+  {
+    id: 324,
+    name: 'zksync',
+    displayName: 'zkSync Era',
+    nativeCurrency: { name: 'Ether', symbol: 'ETH', decimals: 18 },
+    rpcUrls: { default: { http: ['https://mainnet.era.zksync.io'] } },
+    blockExplorers: { default: { name: 'zkSync Explorer', url: 'https://explorer.zksync.io' } },
+  },
+];
+```
+
+### W3AG Criteria Met
+
+- **3.2.1**: No context change without explicit user confirmation
+- **3.2.2**: Wrong network clearly indicated with alert banner
+- **4.1.1**: ARIA combobox pattern for assistive technology
+- **2.1.1**: Full keyboard navigation (arrow keys, Enter, Escape)
+- **4.1.2**: Network changes announced to screen readers
+
+---
+
+## Gas Estimator
+
+### Accessible Gas Fee Display
+
+```tsx
+// components/GasExample.tsx
+import { GasEstimator, GasDisplay, GasWarning } from '@w3ag/react';
+import { useGasPrice, useFeeData } from 'wagmi';
+import { parseGwei } from 'viem';
+import { useState } from 'react';
+
+export function GasExample() {
+  const [selectedSpeed, setSelectedSpeed] = useState<'slow' | 'standard' | 'fast' | 'instant'>('standard');
+  const { data: feeData } = useFeeData();
+  
+  // Build gas speed options from current network data
+  const gasSpeeds = [
+    {
+      id: 'slow' as const,
+      label: 'Slow',
+      description: 'May take several minutes',
+      estimatedTime: '5-10 min',
+      gasPrice: {
+        price: parseGwei('20'),
+        maxFeePerGas: feeData?.maxFeePerGas ? feeData.maxFeePerGas * 80n / 100n : parseGwei('20'),
+        maxPriorityFeePerGas: parseGwei('1'),
+      },
+    },
+    {
+      id: 'standard' as const,
+      label: 'Standard',
+      description: 'Typical confirmation time',
+      estimatedTime: '1-3 min',
+      gasPrice: {
+        price: parseGwei('30'),
+        maxFeePerGas: feeData?.maxFeePerGas ?? parseGwei('30'),
+        maxPriorityFeePerGas: parseGwei('1.5'),
+      },
+    },
+    {
+      id: 'fast' as const,
+      label: 'Fast',
+      description: 'Higher priority',
+      estimatedTime: '15-30 sec',
+      gasPrice: {
+        price: parseGwei('40'),
+        maxFeePerGas: feeData?.maxFeePerGas ? feeData.maxFeePerGas * 120n / 100n : parseGwei('40'),
+        maxPriorityFeePerGas: parseGwei('2'),
+      },
+    },
+    {
+      id: 'instant' as const,
+      label: 'Instant',
+      description: 'Next block',
+      estimatedTime: '< 15 sec',
+      gasPrice: {
+        price: parseGwei('60'),
+        maxFeePerGas: feeData?.maxFeePerGas ? feeData.maxFeePerGas * 150n / 100n : parseGwei('60'),
+        maxPriorityFeePerGas: parseGwei('3'),
+      },
+    },
+  ];
+
+  return (
+    <GasEstimator
+      gasLimit={21000n} // Simple ETH transfer
+      gasSpeeds={gasSpeeds}
+      selectedSpeedId={selectedSpeed}
+      onSpeedChange={setSelectedSpeed}
+      nativeTokenPriceUsd={3500}
+      nativeCurrencySymbol="ETH"
+      congestionLevel="normal"
+      showDetails={true}
+    />
+  );
+}
+```
+
+### Standalone Gas Display
+
+```tsx
+// Use GasDisplay independently for inline gas costs
+<GasDisplay
+  gasWei={parseGwei('30') * 21000n}
+  priceUsd={3500}
+  symbol="ETH"
+  size="md"
+/>
+```
+
+### Gas Warning Component
+
+```tsx
+// Show manual gas warnings when needed
+<GasWarning
+  type="high-gas"
+  message="Gas fees are unusually high"
+  explanation="Consider waiting for lower network activity, typically weekends or late night UTC."
+  severity="warning"
+  dismissible
+/>
+```
+
+### W3AG Criteria Met
+
+- **1.2.3**: Gas costs displayed in both native currency and USD
+- **1.2.5**: Time estimates shown (e.g., "~30 seconds")
+- **2.3.1**: Real-time updates without causing distraction
+- **3.1.1**: Plain language explanations with help tooltip
+- **4.1.2**: Speed changes announced to assistive technology
+- **1.4.1**: Visual congestion indicator with text alternatives
 
 ---
 
