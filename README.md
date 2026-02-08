@@ -1,7 +1,7 @@
 # W3AG — Web3 Accessibility Guidelines
 
 **The first open standard for making blockchain, DeFi, and crypto applications accessible to people with disabilities.**
-
+ 
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
 [![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)](CONTRIBUTING.md)
 
