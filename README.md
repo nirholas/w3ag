@@ -365,3 +365,68 @@ MIT License — see [LICENSE](LICENSE) for details.
   <strong>Web3 should be for everyone.</strong><br>
   Started by nich and built by the open source community.
 </p>
+
+
+---
+
+## 🌐 Live HTTP Deployment
+
+**W3AG — Web3 Accessibility Guidelines** is deployed and accessible over HTTP via [MCP Streamable HTTP](https://modelcontextprotocol.io/specification/2025-03-26/basic/transports#streamable-http) transport — no local installation required.
+
+**Endpoint:**
+```
+https://modelcontextprotocol.name/mcp/w3ag
+```
+
+### Connect from any MCP Client
+
+Add to your MCP client configuration (Claude Desktop, Cursor, SperaxOS, etc.):
+
+```json
+{
+  "mcpServers": {
+    "w3ag": {
+      "type": "http",
+      "url": "https://modelcontextprotocol.name/mcp/w3ag"
+    }
+  }
+}
+```
+
+### Available Tools (2)
+
+| Tool | Description |
+|------|-------------|
+| `get_w3ag_overview` | W3AG standard overview |
+| `get_guideline` | Get specific guideline |
+
+### Example Requests
+
+**W3AG standard overview:**
+```bash
+curl -X POST https://modelcontextprotocol.name/mcp/w3ag \
+  -H "Content-Type: application/json" \
+  -d '{"jsonrpc":"2.0","id":1,"method":"tools/call","params":{"name":"get_w3ag_overview","arguments":{}}}'
+```
+
+**Get specific guideline:**
+```bash
+curl -X POST https://modelcontextprotocol.name/mcp/w3ag \
+  -H "Content-Type: application/json" \
+  -d '{"jsonrpc":"2.0","id":1,"method":"tools/call","params":{"name":"get_guideline","arguments":{"topic":"wallet"}}}'
+```
+
+### List All Tools
+
+```bash
+curl -X POST https://modelcontextprotocol.name/mcp/w3ag \
+  -H "Content-Type: application/json" \
+  -d '{"jsonrpc":"2.0","id":1,"method":"tools/list"}'
+```
+
+### Also Available On
+
+- **[SperaxOS](https://speraxos.vercel.app)** — Browse and install from the [MCP marketplace](https://speraxos.vercel.app/community/mcp)
+- **All 27 MCP servers** — See the full catalog at [modelcontextprotocol.name](https://modelcontextprotocol.name)
+
+> Powered by [modelcontextprotocol.name](https://modelcontextprotocol.name) — the open MCP HTTP gateway
