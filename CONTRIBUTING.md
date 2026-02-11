@@ -50,3 +50,7 @@ If you've encountered an accessibility barrier in a Web3 application that isn't 
 ## Questions?
 
 Open a discussion or reach out to maintainers.
+
+## Code of Conduct
+
+Please read and follow our [Code of Conduct](CODE_OF_CONDUCT.md).
