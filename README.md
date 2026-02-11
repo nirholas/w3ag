@@ -1,4 +1,4 @@
-# W3AG — Web3 Accessibility Guidelines
+# W3AG — Web3 Accessibility Guidelines 
 
 **The first open standard for making blockchain, DeFi, and crypto applications accessible to people with disabilities.**
  
