@@ -322,8 +322,8 @@ Users must be able to interact through multiple means.
 ### Framework Guides
 
 - [React + wagmi Implementation Guide](./guides/react-wagmi.md)
-- [Next.js DeFi Dashboard Guide](./guides/nextjs-defi.md)
-- [Vue + ethers.js Guide](./guides/vue-ethers.md)
+- Next.js DeFi Dashboard Guide — planned
+- Vue + ethers.js Guide — planned
 
 ---
 
