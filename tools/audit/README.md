@@ -4,24 +4,26 @@ A command-line tool to scan React/TypeScript files for **Web3 Accessibility Guid
 
 ## Quick Start
 
-```bash
-# Run directly with npx and ts-node
-npx ts-node tools/audit/w3ag-audit.ts ./src
+`w3ag-audit` is not published to the npm registry yet. Run it from a clone of this repository:
 
-# Or install globally
-npm install -g w3ag-audit
-w3ag-audit ./src
+```bash
+git clone https://github.com/nirholas/w3ag.git
+cd w3ag/tools/audit
+npm install
+npx ts-node w3ag-audit.ts /path/to/your/src
 ```
 
 ## Installation
 
-### As a Development Dependency
+### Available Globally
 
 ```bash
-npm install --save-dev w3ag-audit
+cd w3ag/tools/audit
+npm install
+npm link  # Makes w3ag-audit available on your PATH
 ```
 
-Add to your `package.json` scripts:
+Then add it to the `package.json` scripts of the project you want to audit:
 
 ```json
 {
@@ -30,14 +32,6 @@ Add to your `package.json` scripts:
     "audit:a11y:ci": "w3ag-audit ./src --no-color"
   }
 }
-```
-
-### Standalone
-
-```bash
-cd tools/audit
-npm install
-npm link  # Makes w3ag-audit available globally
 ```
 
 ## Usage
@@ -163,15 +157,23 @@ jobs:
       - name: Install dependencies
         run: npm ci
       
+      - name: Check out W3AG
+        uses: actions/checkout@v4
+        with:
+          repository: nirholas/w3ag
+          path: .w3ag
+
       - name: Run W3AG Audit
-        run: npx w3ag-audit ./src --no-color
+        run: |
+          npm --prefix .w3ag/tools/audit install
+          npx --prefix .w3ag/tools/audit ts-node .w3ag/tools/audit/w3ag-audit.ts ./src --no-color
 ```
 
 ### Pre-commit Hook
 
 ```bash
-# .husky/pre-commit
-npx w3ag-audit ./src --no-color
+# .husky/pre-commit (after `npm link` in w3ag/tools/audit)
+w3ag-audit ./src --no-color
 ```
 
 ## JSON Output
@@ -240,4 +242,4 @@ Edit `w3ag-audit.ts` and add to the `RULES` array:
 
 ## License
 
-MIT
+All rights reserved. See the [LICENSE](../../LICENSE) file at the repository root.

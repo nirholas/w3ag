@@ -9,9 +9,9 @@
     "dist"
   ],
   "scripts": {
-    "build": "tsup src/index.ts --format cjs,esm --dts",
-    "dev": "tsup src/index.ts --format cjs,esm --dts --watch",
-    "lint": "eslint src/",
+    "build": "tsup index.ts --format cjs,esm --dts",
+    "dev": "tsup index.ts --format cjs,esm --dts --watch",
+    "lint": "eslint .",
     "test": "vitest",
     "test:a11y": "vitest run --config vitest.a11y.config.ts",
     "typecheck": "tsc --noEmit"
@@ -52,7 +52,7 @@
     "type": "git",
     "url": "https://github.com/nirholas/w3ag.git"
   },
-  "license": "MIT",
+  "license": "SEE LICENSE IN LICENSE",
   "author": "W3AG Contributors",
   "bugs": {
     "url": "https://github.com/nirholas/w3ag/issues"

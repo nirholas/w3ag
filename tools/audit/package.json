@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "description": "CLI tool to audit React/TypeScript files for Web3 Accessibility Guidelines (W3AG) violations",
   "author": "nirholas",
-  "license": "MIT",
+  "license": "SEE LICENSE IN LICENSE",
   "repository": {
     "type": "git",
     "url": "https://github.com/nirholas/w3ag.git",

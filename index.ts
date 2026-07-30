@@ -1,9 +1,37 @@
-// W3AG Additional Components
-// Add these to the existing components library
+// W3AG root entry point.
+//
+// The components themselves live in ./components, which is the @w3ag/react
+// package. This file re-exports them so `import { ... } from 'w3ag'` and a
+// direct clone of this repository resolve to the same implementations.
 
-export { TokenApprovalDialog } from './TokenApprovalDialog';
-export { NetworkSwitcher, COMMON_NETWORKS } from './NetworkSwitcher';
-export { GasEstimator, GasDisplay, GasWarning } from './GasEstimator';
+export {
+  AddressDisplay,
+  TransactionSummary,
+  WalletModal,
+  RiskWarning,
+  RiskMeter,
+  VerificationBadge,
+  TokenSelector,
+  PriceChange,
+  Timer,
+  TokenApprovalDialog,
+  NetworkSwitcher,
+  COMMON_NETWORKS,
+  GasEstimator,
+  GasDisplay,
+  GasWarning,
+} from './components';
 
-// Types
-export type { GasSpeed, GasEstimate } from './GasEstimator';
+export type {
+  Token,
+  TokenInfo,
+  SpenderInfo,
+  TokenApprovalDialogProps,
+  NetworkInfo,
+  NetworkSwitcherProps,
+  GasSpeed,
+  GasPrice,
+  GasEstimatorProps,
+  GasDisplayProps,
+  GasWarningProps,
+} from './components';

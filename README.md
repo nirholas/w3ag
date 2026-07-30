@@ -313,11 +313,13 @@ Users must be able to interact through multiple means.
 
 ### Libraries & Tools
 
-| Tool | Description | Link |
-|------|-------------|------|
-| `@w3ag/react` | React components with W3AG compliance | *Coming soon* |
-| `@w3ag/audit` | Automated accessibility auditing for Web3 | *Coming soon* |
-| `@w3ag/wagmi` | Accessible wagmi hooks and components | *Coming soon* |
+None of these are published to the npm registry yet. Use them from a clone of this repository.
+
+| Tool | Description | Location |
+|------|-------------|----------|
+| `@w3ag/react` | React components with W3AG compliance | [`components/`](components) |
+| `w3ag-audit` | Automated accessibility auditing for Web3 | [`tools/audit/`](tools/audit) |
+| `@w3ag/wagmi` | Accessible wagmi hooks and components | Planned. See the [React + wagmi guide](guides/react-wagmi.md) for the patterns it will package. |
 
 ### Framework Guides
 
@@ -414,7 +416,7 @@ curl -X POST https://modelcontextprotocol.name/mcp/w3ag \
 
 ### Also Available On
 
-- **[SperaxOS](https://speraxos.vercel.app)** — Browse and install from the [MCP marketplace](https://speraxos.vercel.app/community/mcp)
+- **[SperaxOS](https://github.com/nirholas/SperaxOS)** - source for the MCP marketplace. The hosted marketplace is offline while hosting is being migrated.
 - **All 27 MCP servers** — See the full catalog at [modelcontextprotocol.name](https://modelcontextprotocol.name)
 
 > Powered by [modelcontextprotocol.name](https://modelcontextprotocol.name) — the open MCP HTTP gateway

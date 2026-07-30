@@ -11,7 +11,7 @@ import React, { useState, useRef, useEffect, useCallback } from 'react';
  * - 4.1.1: Proper ARIA combobox pattern
  */
 
-interface Token {
+export interface Token {
   address: string;
   symbol: string;
   name: string;
