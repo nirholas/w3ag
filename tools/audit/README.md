@@ -4,23 +4,18 @@ A command-line tool to scan React/TypeScript files for **Web3 Accessibility Guid
 
 ## Quick Start
 
-`w3ag-audit` is not published to the npm registry yet. Run it from a clone of this repository:
+Install and run the published CLI without cloning this repository:
 
 ```bash
-git clone https://github.com/nirholas/w3ag.git
-cd w3ag/tools/audit
-npm install
-npx ts-node w3ag-audit.ts /path/to/your/src
+npx w3ag-audit /path/to/your/src
 ```
 
 ## Installation
 
-### Available Globally
+### Global installation
 
 ```bash
-cd w3ag/tools/audit
-npm install
-npm link  # Makes w3ag-audit available on your PATH
+npm install --global w3ag-audit
 ```
 
 Then add it to the `package.json` scripts of the project you want to audit:
