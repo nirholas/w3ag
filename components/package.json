@@ -12,7 +12,7 @@
     "build": "tsup index.ts --format cjs,esm --dts",
     "dev": "tsup index.ts --format cjs,esm --dts --watch",
     "lint": "eslint .",
-    "test": "vitest",
+    "test": "vitest run --passWithNoTests",
     "test:a11y": "vitest run --config vitest.a11y.config.ts",
     "typecheck": "tsc --noEmit"
   },
