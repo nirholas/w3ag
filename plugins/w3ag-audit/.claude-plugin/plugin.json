@@ -1,0 +1,16 @@
+{
+  "name": "w3ag-audit",
+  "version": "0.1.0",
+  "description": "Audit React and TypeScript web3 frontends for Web3 Accessibility Guidelines (W3AG) violations.",
+  "author": {
+    "name": "nirholas"
+  },
+  "repository": "https://github.com/nirholas/w3ag",
+  "homepage": "https://nirholas.github.io/w3ag/",
+  "keywords": [
+    "accessibility",
+    "web3",
+    "a11y",
+    "audit"
+  ]
+}
