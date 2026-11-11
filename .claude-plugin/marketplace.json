@@ -1,0 +1,21 @@
+{
+  "name": "w3ag",
+  "owner": {
+    "name": "nirholas"
+  },
+  "description": "Audit React and TypeScript web3 frontends for Web3 Accessibility Guidelines (W3AG) violations.",
+  "plugins": [
+    {
+      "name": "w3ag-audit",
+      "source": "./plugins/w3ag-audit",
+      "description": "Audit React and TypeScript web3 frontends for Web3 Accessibility Guidelines (W3AG) violations.",
+      "category": "development",
+      "tags": [
+        "accessibility",
+        "web3",
+        "a11y",
+        "audit"
+      ]
+    }
+  ]
+}
